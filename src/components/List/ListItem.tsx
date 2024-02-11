@@ -24,17 +24,28 @@ const ListItem = (props: ItemProps) => {
   }
   return (
     <li className="flex items-center justify-between py-3">
-      <span className="max-w-60 truncate text-nowrap">{task.name}</span>
-      <div className="flex w-20 justify-around">
+      <span
+        className={`max-w-60 truncate text-nowrap ${
+          task.isDone ? 'select-none opacity-50' : 'opacity-100'
+        }`}
+      >
+        {task.name}
+      </span>
+      <div className={`flex w-20 justify-around `}>
         <button
-          className="p-1"
+          className={`p-1 transition duration-300 hover:text-green-700 ${
+            task.isDone ? 'pointer-events-none opacity-50' : 'opacity-100'
+          }`}
           onClick={() => markDone(task.id)}
           disabled={task.isDone}
         >
           <Done />
         </button>
-        <button className="p-1" onClick={() => removeTask(task.id)}>
-          <Delete htmlColor="red" />
+        <button
+          className="p-1 transition duration-300 hover:text-red-600"
+          onClick={() => removeTask(task.id)}
+        >
+          <Delete />
         </button>
       </div>
     </li>

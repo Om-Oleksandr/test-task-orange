@@ -20,7 +20,10 @@ function Form(props: FormProps) {
     e.preventDefault()
   }
   return (
-    <form onSubmit={(e) => submitForm(e)} className="flex w-80 gap-x-5">
+    <form
+      onSubmit={(e) => submitForm(e)}
+      className="flex w-80 max-w-full gap-x-5"
+    >
       <input
         className="w-full border border-solid border-black p-2 outline-none"
         type="text"

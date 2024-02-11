@@ -15,7 +15,7 @@ function App() {
     })
   }
   return (
-    <main className="m-auto flex max-w-screen-xl flex-col items-center ">
+    <main className="m-auto flex min-h-screen max-w-screen-xl flex-col items-center gap-y-5 px-5 py-10">
       <Form addTask={addTask} />
       <List tasks={tasks} setTasks={setTasks} />
     </main>
