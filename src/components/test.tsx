@@ -1,32 +1,35 @@
-import { render, screen } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
+import Form from './AddForm'
+import List from './List'
 
-import App from './App'
+describe('<List />', () => {
+  it('renders correctly with tasks', () => {
+    const tasks = [
+      { id: 1, name: 'Task 1', isDone: false },
+      { id: 2, name: 'Task 2', isDone: true },
+      { id: 3, name: 'Task 3', isDone: false }
+    ]
+    const { getByText } = render(<List tasks={tasks} setTasks={() => {}} />)
 
-describe('<App />', () => {
-  it('should render the App', () => {
-    const { container } = render(<App />)
+    tasks.forEach((task) => {
+      expect(getByText(`${task.name}`)).toBeInTheDocument()
+    })
+  })
+  it('renders a message when there are no tasks', () => {
+    const { getByText } = render(<List tasks={[]} setTasks={() => {}} />)
+    expect(getByText('No tasks to do')).toBeInTheDocument()
+  })
+})
 
-    expect(
-      screen.getByRole('heading', {
-        name: /Welcome!/i,
-        level: 1
-      })
-    ).toBeInTheDocument()
+describe('<Form />', () => {
+  it('renders without crashing', () => {
+    render(<Form addTask={() => {}} />)
+  })
 
-    expect(
-      screen.getByText(
-        /This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier./i
-      )
-    ).toBeInTheDocument()
-
-    expect(
-      screen.getByRole('link', {
-        name: /start building for free/i
-      })
-    ).toBeInTheDocument()
-
-    expect(screen.getByRole('img')).toBeInTheDocument()
-
-    expect(container.firstChild).toBeInTheDocument()
+  it('updates input value correctly', () => {
+    const { getByRole } = render(<Form addTask={() => {}} />)
+    const input = getByRole('textbox') as HTMLInputElement
+    fireEvent.change(input, { target: { value: 'Task 1' } })
+    expect(input.value).toBe('Task 1')
   })
 })
